@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Устанавливает кодировку символов для страницы в UTF-8 -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Устанавливает метатег viewport для управления макетом страницы на мобильных устройствах -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Заголовок страницы, отображаемый на вкладке браузера -->
+    <title>User Management</title>
+  </head>
+  <body>
+    <!-- Основной заголовок страницы -->
+    <h1>User Management</h1>
+    <div class="con">
+      <div class="user_info_auth">
+      <div>
+        <!-- Заголовок для формы создания пользователя -->
+        <h2>Auth User</h2>
+        <!-- Форма для создания нового пользователя -->
+        <form id="auth-user-form">
+          <!-- Поле ввода для имени пользователя -->
+          <input type="text" id="auth_username" placeholder="Username" required />
+          <!-- Поле ввода для пароля пользователя -->
+          <input type="password" id="auth_password" placeholder="Password" required />
+          <!-- Кнопка для отправки формы и создания пользователя -->
+          <button type="submit">Login User</button>
+        </form>
+      </div>
+      <div>
+        <!-- Заголовок для списка пользователей -->
+        <h2>User me</h2>
+        <button onclick="fetchUserme()">CHECK USER ME</button>
+        <!-- Ненумерованный список, в который будет добавлен список пользователей -->
+        <ul id="user-me-list"></ul>
+      </div>
+      
+    </div>
+      <!-- Раздел для создания нового пользователя -->
+      
+
+      <!-- Раздел для создания нового пользователя -->
+    <div class="user_info_auth">
+      <!-- Раздел для отображения списка пользователей -->
+      <div>
+        <!-- Заголовок для списка пользователей -->
+        <h2>Users</h2>
+        <!-- Ненумерованный список, в который будет добавлен список пользователей -->
+        <ul id="user-list"></ul>
+      </div>
+      <div>
+        <!-- Заголовок для формы создания пользователя -->
+        <h2>Create User</h2>
+        <!-- Форма для создания нового пользователя -->
+        <form id="create-user-form">
+          <!-- Поле ввода для имени пользователя -->
+          <input type="text" id="username" placeholder="Username" required />
+          <!-- Поле ввода для email пользователя -->
+          <input type="email" id="email" placeholder="Email" required />
+          <!-- Поле ввода для полного имени пользователя -->
+          <input type="text" id="full_name" placeholder="Full Name" />
+          <!-- Поле ввода для пароля пользователя -->
+          <input type="password" id="password" placeholder="Password" required />
+          <!-- Кнопка для отправки формы и создания пользователя -->
+          <button type="submit">Create User</button>
+        </form>
+      </div>
+      <div>
+        <!-- Заголовок для формы удаления пользователя -->
+        <h2>Delete User</h2>
+        <!-- Форма для удаления пользователя по ID -->
+        <form id="delete-user-form">
+          <!-- Поле ввода для ID пользователя, которого нужно удалить -->
+          <input type="number" id="delete-user-id" placeholder="User ID" required />
+          <!-- Кнопка для отправки формы и удаления пользователя -->
+          <button type="submit">Delete User</button>
+        </form>
+      </div>
+    </div>
+
+      <!-- Раздел для удаления пользователя -->
+      
+      <!-- Раздел для обновления существующего пользователя -->
+      <div>
+        <!-- Заголовок для формы обновления пользователя -->
+        <h2>Update User</h2>
+        <!-- Форма для обновления данных пользователя -->
+        <form id="update-user-form">
+          <!-- Поле ввода для ID пользователя, которого нужно обновить -->
+          <input type="number" id="update-user-id" placeholder="User ID" required />
+          <!-- Поле ввода для нового имени пользователя -->
+          <input type="text" id="update-username" placeholder="Username" />
+          <!-- Поле ввода для нового email пользователя -->
+          <input type="email" id="update-email" placeholder="Email" />
+          <!-- Поле ввода для нового полного имени пользователя -->
+          <input type="text" id="update-full_name" placeholder="Full Name" />
+          <!-- Поле ввода для нового пароля пользователя -->
+          <input type="password" id="update-password" placeholder="Password" />
+          <!-- Кнопка для отправки формы и обновления пользователя -->
+          <button type="submit">Update User</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="/static/index.js"></script>
+  <script>
+     let accessToken = '';
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const response = await fetch('http://localhost:8000/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    'username': username,
+                    'password': password
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                accessToken = data.access_token;
+                document.getElementById('status').textContent = "Успешный вход!";
+            } else {
+                document.getElementById('status').textContent = "Ошибка входа!";
+            }
+        }
+        async function getUserInfo() {
+            if (!accessToken) {
+                document.getElementById('userInfo').textContent = "Сначала войдите в систему!";
+                return;
+            }
+
+
+            const response = await fetch('http://localhost:8000/users/me', {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+
+
+            const data = await response.json();
+            document.getElementById('userInfo').textContent = JSON.stringify(data, null, 2);
+        }
+
+  </script>
+</html>

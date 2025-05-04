@@ -1,0 +1,92 @@
+/* Основной стиль для тела страницы */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  background: linear-gradient(135deg, #2980b9, #e74c3c);
+  animation: gradientAnimation 4s ease infinite; /* Уменьшаем время анимации до 0.5 секунд */
+  background-size: 200% 200%; /* Увеличиваем размер фона для создания плавного перетекания */
+  background-repeat: no-repeat;
+}
+body h1{
+  color: white;
+}
+/* Анимация позиции фона */
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%; /* Начальная позиция */
+  }
+  50% {
+      background-position: 100% 50%; /* Промежуточная позиция */
+  }
+  100% {
+      background-position: 0% 50%; /* Возвращаемся к начальной позиции */
+  }
+}
+  .con{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: self-start;
+    justify-content: center;
+  }
+  .user_info_auth{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  h2 {
+    color: #555;
+    margin-top: 20px;
+  }
+  div {
+    background-color: #ffffff98;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+  form {
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+  }
+  input,
+  button {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  #status,
+  #userInfo {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+  }
